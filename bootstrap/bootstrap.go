@@ -88,6 +88,7 @@ func LoadEnv() {
 				BreadcrumbLevel:   zapcore.InfoLevel,  // at what level should we sent breadcrumbs to sentry
 				Tags: map[string]string{
 					"Version": Version,
+					"Stage":   env.GetEnvWithFallback(env.StageEnv, ""),
 				},
 			},
 			zapsentry.NewSentryClientFromClient(sentry.CurrentHub().Client()),
