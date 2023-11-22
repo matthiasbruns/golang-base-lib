@@ -29,6 +29,7 @@ func initSentry() bool {
 			Dsn:              sentryDNS,
 			EnableTracing:    true,
 			TracesSampleRate: 1.0,
+			Release:          Version,
 			Environment:      env.GetEnvWithFallback(env.StageEnv, ""),
 			BeforeSend: func(event *sentry.Event, hint *sentry.EventHint) *sentry.Event {
 				zap.S().Debugf("Sentry event: %s", event.Message)
