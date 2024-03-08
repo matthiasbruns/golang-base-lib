@@ -31,7 +31,7 @@ func initSentry() bool {
 			EnableTracing:    true,
 			TracesSampleRate: 1.0,
 			Release:          Version,
-			Environment:      env.GetEnvWithFallback(env.StageEnv, ""),
+			Environment:      env.GetEnvWithFallback(env.Env, ""),
 			BeforeSend: func(event *sentry.Event, hint *sentry.EventHint) *sentry.Event {
 				zap.S().Debugf("Sentry event: %s", event.Message)
 				return event
@@ -91,8 +91,7 @@ func LoadEnv() {
 				BreadcrumbLevel:   zapcore.InfoLevel,  // at what level should we sent breadcrumbs to sentry
 				Tags: map[string]string{
 					"Version":     Version,
-					"Stage":       env.GetEnvWithFallback(env.StageEnv, ""),
-					"environment": env.GetEnvWithFallback(env.StageEnv, ""),
+					"environment": env.GetEnvWithFallback(env.Env, ""),
 				},
 			},
 			zapsentry.NewSentryClientFromClient(sentry.CurrentHub().Client()),

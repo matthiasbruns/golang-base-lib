@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-const StageEnv = "STAGE"
+const Env = "ENV"
 
 func GetEnvWithFallback(env string, fallback string) string {
 	value := os.Getenv(env)
@@ -26,10 +26,10 @@ func GetEnvOrFail(env string) string {
 }
 
 func IsProd() bool {
-	return os.Getenv(StageEnv) == "prod"
+	return os.Getenv(Env) == "prod"
 }
 
 func IsLocal() bool {
-	stageEnv := os.Getenv(StageEnv)
-	return stageEnv == "" || stageEnv == "local"
+	env := os.Getenv(Env)
+	return env == "" || env == "local"
 }

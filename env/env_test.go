@@ -53,14 +53,14 @@ func TestIsProd(t *testing.T) {
 		name string
 		want bool
 	}{
-		{name: "should return true when STAGE is equals prod", want: true},
-		{name: "should return false when STAGE is not equals prod", want: false},
+		{name: "should return true when ENV is equals prod", want: true},
+		{name: "should return false when ENV is not equals prod", want: false},
 	}
 	for _, tt := range tests {
 		if tt.want {
-			_ = os.Setenv("STAGE", "prod")
+			_ = os.Setenv("ENV", "prod")
 		} else {
-			_ = os.Setenv("STAGE", "not prod")
+			_ = os.Setenv("ENV", "not prod")
 		}
 
 		t.Run(
@@ -79,12 +79,12 @@ func TestIsLocal(t *testing.T) {
 		want   bool
 		envVal string
 	}{
-		{name: "should return true when STAGE is equals local", envVal: "local", want: true},
-		{name: "should return true when STAGE is empty", envVal: "", want: true},
-		{name: "should return false when STAGE is not empty and not local", envVal: "prod", want: false},
+		{name: "should return true when ENV is equals local", envVal: "local", want: true},
+		{name: "should return true when ENV is empty", envVal: "", want: true},
+		{name: "should return false when ENV is not empty and not local", envVal: "prod", want: false},
 	}
 	for _, tt := range tests {
-		_ = os.Setenv("STAGE", tt.envVal)
+		_ = os.Setenv("ENV", tt.envVal)
 
 		t.Run(
 			tt.name, func(t *testing.T) {
