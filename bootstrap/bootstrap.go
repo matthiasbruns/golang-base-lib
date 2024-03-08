@@ -5,8 +5,8 @@ import (
 
 	"github.com/getsentry/sentry-go"
 	sentryotel "github.com/getsentry/sentry-go/otel"
-	"github.com/happyann/golang-base-lib/env"
 	"github.com/joho/godotenv"
+	"github.com/matthiasbruns/golang-base-lib/env"
 	"go.opentelemetry.io/otel"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 
