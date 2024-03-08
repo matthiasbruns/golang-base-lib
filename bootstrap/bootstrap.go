@@ -2,6 +2,7 @@ package cmd
 
 import (
 	_ "embed"
+
 	"github.com/getsentry/sentry-go"
 	sentryotel "github.com/getsentry/sentry-go/otel"
 	"github.com/happyann/golang-base-lib/env"
@@ -19,14 +20,14 @@ import (
 var Version string
 
 func initSentry() bool {
-	sentryDNS := env.GetEnvWithFallback("SENTRY_DNS", "")
-	if sentryDNS == "" {
+	sentryDSN := env.GetEnvWithFallback("SENTRY_DSN", "")
+	if sentryDSN == "" {
 		return false
 	}
 
 	if err := sentry.Init(
 		sentry.ClientOptions{
-			Dsn:              sentryDNS,
+			Dsn:              sentryDSN,
 			EnableTracing:    true,
 			TracesSampleRate: 1.0,
 			Release:          Version,
