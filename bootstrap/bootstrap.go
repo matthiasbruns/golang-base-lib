@@ -2,6 +2,7 @@ package cmd
 
 import (
 	_ "embed"
+	"log"
 
 	"github.com/getsentry/sentry-go"
 	sentryotel "github.com/getsentry/sentry-go/otel"
@@ -38,19 +39,19 @@ func initSentry() bool {
 			},
 		},
 	); err != nil {
-		zap.L().Fatal("Could not initialize sentry", zap.Error(err))
+		log.Fatal("Could not initialize sentry", err)
 		return false
 	}
 
 	return true
 }
 
-func LoadEnv() {
+func LoadEnv(localEnv string) {
 	// init env
 	if env.IsLocal() {
-		err := godotenv.Load("local.env")
+		err := godotenv.Load(localEnv)
 		if err != nil {
-			zap.L().Fatal("No config file 'local.env' found for non prod env", zap.Error(err))
+			log.Fatal("No config file 'local.env' found for non prod env", err)
 		}
 	}
 
@@ -70,14 +71,14 @@ func LoadEnv() {
 			),
 		)
 		if err != nil {
-			l.Fatal("can't initialize zap logger", zap.Error(err))
+			log.Fatal("can't initialize zap logger", err)
 			return
 		}
 		logger = l
 	} else {
 		l, err := zap.NewDevelopment(zap.AddStacktrace(zap.ErrorLevel))
 		if err != nil {
-			l.Fatal("can't initialize zap logger", zap.Error(err))
+			log.Fatal("can't initialize zap logger", err)
 		}
 		logger = l
 	}
@@ -98,7 +99,7 @@ func LoadEnv() {
 		)
 
 		if err != nil {
-			logger.Fatal("can't initialize zapsentry", zap.Error(err))
+			log.Fatal("can't initialize zapsentry", err)
 		}
 		logger = zapsentry.AttachCoreToLogger(core, logger)
 	}
